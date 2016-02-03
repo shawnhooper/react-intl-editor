@@ -23,11 +23,24 @@ $babelEditor = new \BabelEditor\BabelEditor();
 				<h1>Babel Editor</h1>
 			</header>
 			<main>
-				<?php
-
-
-
-				?>
+				<table id="project_stats">
+					<thead>
+					<tr>
+						<th>Property</th>
+						<th>Value</th>
+					</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>Message Files Found</th>
+							<td><?php echo $babelEditor->fileCount; ?></td>
+						</tr>
+						<tr>
+							<th>Strings Found</th>
+							<td><?php echo $babelEditor->stringCount; ?></td>
+						</tr>
+					</tbody>
+				</table>
 			</main>
 			<footer>
 				<hr />
