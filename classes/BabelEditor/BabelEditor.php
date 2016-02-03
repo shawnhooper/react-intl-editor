@@ -242,4 +242,32 @@ class BabelEditor {
 		return $i;
 	}
 
+	public function saveChanges() {
+		// Check for a Locale
+		if (!isset($_POST['locale'])) {
+			throw new Exception('Missing Locale in Form');
+		} else {
+			$locale = $_POST['locale'];
+			unset($_POST['locale']);
+		}
+
+		// Check for a Locale
+		if (!isset($_POST['type'])) {
+			throw new Exception('Missing type parameter in Form');
+		} else {
+			$type = $_POST['type'];
+			unset($_POST['type']);
+		}
+
+		switch ($type) {
+			case 'missing':
+				break;
+			default:
+				throw new Exception('No handler for saving this type of record is implemented');
+				break;
+		}
+
+		return true;
+	}
+
 }

@@ -19,10 +19,8 @@ try {
 
 	switch ($type) {
 		case 'missing':
-			var_dump($_POST);
-			die();
 			$babelEditor->saveChanges($_POST);
-
+			header('Location:index.php?update=true');
 			break;
 		default:
 			throw new \BabelEditor\Exception('Unknown String Type Specified in Querystring');
