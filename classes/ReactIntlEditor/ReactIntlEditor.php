@@ -286,18 +286,21 @@ class ReactIntlEditor {
 
 		$output = '{';
 
-		foreach ($this->localeStrings[$locale] as $string) {
-			$output .= '"' . $string[0] . '": "';
-			$output .= $string[1];
-			$output .= '",';
+		for ($i = 0; $i < count($this->localeStrings[$locale]); $i++) {
+			if ($this->localeStrings[$locale][$i][1] == '') continue;
+			$output .= '"' . $this->localeStrings[$locale][$i][0] . '": "';
+			$output .= $this->localeStrings[$locale][$i][1];
+			$output .= ($i == count($this->localeStrings[$locale]) -1 ) ? '"' : '",';
 		}
 
 		$output .= '}';
+		$output = Utilities::jsonIndent($output);
 
-		echo '<pre>';
-		print_r(Utilities::jsonIndent($output));
-		echo '</pre>';
+		$fname = 'intl/locales/' . $locale . '.json';
+		$fhandle = fopen($fname,"w");
+		fwrite($fhandle,$output);
+		fclose($fhandle);
 
-		die();
+		return;
 	}
 }
