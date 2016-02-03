@@ -23,6 +23,9 @@ $babelEditor = new \BabelEditor\BabelEditor();
 				<h1>Babel Editor</h1>
 			</header>
 			<main>
+
+				<div class="half">
+				<h1>Project Stats</h1>
 				<table id="project_stats">
 					<thead>
 					<tr>
@@ -41,6 +44,11 @@ $babelEditor = new \BabelEditor\BabelEditor();
 						</tr>
 					</tbody>
 				</table>
+				</div>
+
+				<div class="half">
+					<h1>Locales</h1>
+				</div>
 			</main>
 			<footer>
 				<hr />

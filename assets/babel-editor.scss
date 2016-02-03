@@ -12,6 +12,7 @@ body {
 
 header {
   text-align:center;
+  border-bottom:3px solid blue;
 }
 
 main {
@@ -21,4 +22,34 @@ main {
 h1 {
   font-size:180%;
   font-weight:bold;
+}
+
+main div.half {
+  width:49%;
+  display:inline-block;
+}
+
+#project_stats {
+  border:1px solid black;
+  min-width:20px;
+
+  thead tr {
+    background-color:darkblue;
+    color:white;
+    text-align:left;
+    font-weight:bold;
+
+    td, th {
+      padding: 15px;
+    }
+  }
+  tbody {
+    tr {
+      th, td {
+        text-align:left;
+        padding:10px;
+      }
+    }
+  }
+
 }
