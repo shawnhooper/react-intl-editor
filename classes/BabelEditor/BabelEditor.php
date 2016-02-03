@@ -63,11 +63,21 @@ class BabelEditor {
 		 * Extract All Strings from Source Files
 		 */
 		foreach ($this->sourceFiles as $file) {
-			$found = $this->extractStringsFromFile($file);
+			$found = $this->extractStringsFromSourceFile($file);
 
 			$this->sourceStrings = array_merge($this->sourceStrings, $found);
 
 		}
+
+		/**
+		 * Extract All Strings from Locale Files
+		 */
+		foreach ($this->localeFiles as $file) {
+			$found = $this->extractStringsFromLocaleFile($file);
+			$locale = basename($file, '.json');
+			$this->localeStrings[$locale] = $found;
+		}
+
 	}
 
 	/***
@@ -96,11 +106,30 @@ class BabelEditor {
 	 *
 	 * @return array an array containing each string array from the JSON files
 	 */
-	private function extractStringsFromFile($file) {
+	private function extractStringsFromSourceFile($file) {
 
 		$contents = file_get_contents($file);
 		$stringsFound = json_decode($contents);
 		return $stringsFound;
 
 	}
+
+	/***
+	 * @param $file string Path to the file to be read
+	 *
+	 * @return array an array containing each string array from the JSON files
+	 */
+	private function extractStringsFromLocaleFile($file) {
+		$stringsFound = [];
+		$contents = file_get_contents($file);
+		$json = json_decode($contents);
+		if ( ! $json ) return [];
+		foreach ($json as $key=>$value) {
+			array_push($stringsFound, array($key, $value));
+		}
+
+		return $stringsFound;
+
+	}
+
 }
