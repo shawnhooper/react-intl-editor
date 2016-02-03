@@ -22,6 +22,10 @@ try {
 			$reactIntlEditor->saveChanges($_POST);
 			header('Location:index.php?update=true');
 			break;
+		case 'matching':
+			$reactIntlEditor->saveChanges($_POST);
+			header('Location:index.php?update=true');
+			break;
 		default:
 			throw new \ReactIntlEditor\Exception('Unknown String Type Specified in Querystring');
 			break;

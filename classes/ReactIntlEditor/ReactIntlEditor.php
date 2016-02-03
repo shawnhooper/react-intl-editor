@@ -293,16 +293,7 @@ class ReactIntlEditor {
 			unset($realPost['type']);
 		}
 
-
-
-		switch ($type) {
-			case 'missing':
-				$this->updateSourceStrings($realPost, $locale);
-				break;
-			default:
-				throw new Exception('No handler for saving this type of record is implemented');
-				break;
-		}
+		$this->updateSourceStrings($realPost, $locale, $type);
 
 		return true;
 	}
@@ -310,10 +301,26 @@ class ReactIntlEditor {
 	/***
 	 * @param $strings array The strings passed in from the HTML form.
 	 */
-	private function updateSourceStrings($strings, $locale) {
+	private function updateSourceStrings($strings, $locale, $type) {
+
 		foreach($strings as $key=>$value) {
-			if ($value == '') continue;
-			array_push($this->localeStrings[$locale], array($key, $value));
+
+
+			if ($type == 'matching') {
+				$i = 0;
+				foreach ($this->localeStrings[$locale] as $localeString) {
+					if ($key == $localeString[0]) {
+						$this->localeStrings[$locale][$i][1] = $value;
+						continue;
+					}
+					$i++;
+				}
+			}
+
+			if ($type == 'missing') {
+				if ($value == '') continue;
+				array_push($this->localeStrings[$locale], array($key, $value));
+			}
 		}
 
 		$this->saveSourceStringsToFile($locale);
@@ -324,8 +331,16 @@ class ReactIntlEditor {
 		$output = '{';
 
 		for ($i = 0; $i < count($this->localeStrings[$locale]); $i++) {
+
+			if ($this->localeStrings[$locale][$i][1] == '') continue;
+
 			$output .= '"' . $this->localeStrings[$locale][$i][0] . '": "';
-			$output .= str_replace("\n", '\n', $this->localeStrings[$locale][$i][1]);
+
+			if (strpos($this->localeStrings[$locale][$i][1], "\n") !== false) {
+				$output .= str_replace("\r\n", "\\n", $this->localeStrings[$locale][$i][1]);
+			} else {
+				$output .= $this->localeStrings[$locale][$i][1];
+			}
 			$output .= ($i == count($this->localeStrings[$locale]) -1 ) ? '"' : '",';
 		}
 
