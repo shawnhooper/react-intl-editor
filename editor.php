@@ -44,8 +44,9 @@ try {
 				<h2><?php echo $locale; ?></h2>
 			</header>
 			<main>
-				<form method="post">
-
+				<form method="post" action="save_changes.php">
+					<input type="hidden" name="locale" value="<?php echo $locale;?>" />
+					<input type="hidden" name="type" value="<?php echo $type;?>" />
 					<div class="submitbar">
 						<button class="submitbutton">Save Changes</button>
 					</div>
