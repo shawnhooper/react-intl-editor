@@ -62,7 +62,12 @@ try {
 
 					<?php foreach ($babelEditor->locales as $locale) { ?>
 
-						<h2><?php echo $locale; ?></h2>
+						<div class="locale_header"><h2><?php echo $locale; ?></h2>
+						<?php if ($babelEditor->getMissingStringCount($locale) == 0) {
+							echo '<span>&#9989;</span>';
+						} else {
+							echo '<span>&#10060;</span>';
+						} ?></div>
 					<table id="project_stats">
 						<thead>
 						<tr>
@@ -73,15 +78,15 @@ try {
 						<tbody>
 						<tr>
 							<th>Matching Strings</th>
-							<td><?php echo $babelEditor->getMatchingStringCount($locale); ?></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=matching"><?php echo $babelEditor->getMatchingStringCount($locale); ?></a></td>
 						</tr>
 						<tr>
 							<th>Missing Strings</th>
-							<td><?php echo $babelEditor->getMissingStringCount($locale); ?></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=missing"><?php echo $babelEditor->getMissingStringCount($locale); ?></a></td>
 						</tr>
 						<tr>
 							<th>Orphaned Strings</th>
-							<td><?php echo $babelEditor->getOrphanedStringCount($locale); ?></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=orphaned"><?php echo $babelEditor->getOrphanedStringCount($locale); ?></a></td>
 						</tr>
 						</tbody>
 					</table>
