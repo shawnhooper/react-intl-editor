@@ -1,5 +1,5 @@
 <?php
-namespace BabelEditor;
+namespace ReactIntlEditor;
 
 class Exception extends \Exception {
 

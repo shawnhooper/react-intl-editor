@@ -9,8 +9,8 @@ spl_autoload_register(function($className)
 });
 
 try {
-	$babelEditor = new \BabelEditor\BabelEditor();
-} catch (\BabelEditor\Exception $e) {
+	$reactIntlEditor = new \ReactIntlEditor\ReactIntlEditor();
+} catch (\ReactIntlEditor\Exception $e) {
 
 	echo '<div style="color:black;border:3px solid red;padding:15px;max-width:800px;width:100%;">';
 	echo '<p>An error has occured during startup:</p><p>' . $e->getMessage() . '</p>';
@@ -20,14 +20,14 @@ try {
 
 ?><html lang="en">
 	<head>
-		<title>Babel Editor</title>
-		<link rel="stylesheet" href="assets/babel-editor.css" />
+		<title>React Intl Editor</title>
+		<link rel="stylesheet" href="assets/react-intl-editor.css" />
 	</head>
 
 	<body>
 		<div class="wrapper">
 			<header>
-				<h1>Babel Editor</h1>
+				<h1>React Intl Editor</h1>
 			</header>
 			<main>
 
@@ -43,15 +43,15 @@ try {
 					<tbody>
 						<tr>
 							<th>Message Files Found</th>
-							<td><?php echo $babelEditor->sourceFileCount; ?></td>
+							<td><?php echo $reactIntlEditor->sourceFileCount; ?></td>
 						</tr>
 						<tr>
 							<th>Strings Found</th>
-							<td><?php echo $babelEditor->sourceStringCount; ?></td>
+							<td><?php echo $reactIntlEditor->sourceStringCount; ?></td>
 						</tr>
 						<tr>
 							<th>Locales Found</th>
-							<td><?php echo $babelEditor->localeCount; ?></td>
+							<td><?php echo $reactIntlEditor->localeCount; ?></td>
 						</tr>
 					</tbody>
 				</table>
@@ -60,10 +60,10 @@ try {
 				<div class="half">
 					<h1>Locales</h1>
 
-					<?php foreach ($babelEditor->locales as $locale) { ?>
+					<?php foreach ($reactIntlEditor->locales as $locale) { ?>
 
 						<div class="locale_header"><h2><?php echo $locale; ?></h2>
-						<?php if ($babelEditor->getMissingStringCount($locale) == 0) {
+						<?php if ($reactIntlEditor->getMissingStringCount($locale) == 0) {
 							echo '<span>&#9989;</span>';
 						} else {
 							echo '<span>&#10060;</span>';
@@ -78,15 +78,15 @@ try {
 						<tbody>
 						<tr>
 							<th>Matching Strings</th>
-							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=matching"><?php echo $babelEditor->getMatchingStringCount($locale); ?></a></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=matching"><?php echo $reactIntlEditor->getMatchingStringCount($locale); ?></a></td>
 						</tr>
 						<tr>
 							<th>Missing Strings</th>
-							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=missing"><?php echo $babelEditor->getMissingStringCount($locale); ?></a></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=missing"><?php echo $reactIntlEditor->getMissingStringCount($locale); ?></a></td>
 						</tr>
 						<tr>
 							<th>Orphaned Strings</th>
-							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=orphaned"><?php echo $babelEditor->getOrphanedStringCount($locale); ?></a></td>
+							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=orphaned"><?php echo $reactIntlEditor->getOrphanedStringCount($locale); ?></a></td>
 						</tr>
 						</tbody>
 					</table>

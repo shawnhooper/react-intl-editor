@@ -1,7 +1,7 @@
 <?php
-namespace BabelEditor;
+namespace ReactIntlEditor;
 
-class BabelEditor {
+class ReactIntlEditor {
 
 	private $locale = null;
 
@@ -37,7 +37,7 @@ class BabelEditor {
 	}
 
 	/***
-	 * BabelEditor constructor.
+	 * ReactIntlEditor constructor.
 	 */
 	public function __construct($locale = null) {
 
@@ -200,7 +200,7 @@ class BabelEditor {
 	public function getMissingStrings() {
 
 		if ($this->locale === null) {
-			throw new Exception('BabelEditor was not instansiated with a locale');
+			throw new Exception('ReactIntlEditor was not instansiated with a locale');
 		}
 
 		$matches = [];

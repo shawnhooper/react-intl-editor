@@ -11,19 +11,19 @@ spl_autoload_register(function($className)
 try {
 	$locale = $_GET['locale'];
 	$type = $_GET['type'];
-	$babelEditor = new \BabelEditor\BabelEditor($locale);
+	$reactIntlEditor = new \ReactIntlEditor\ReactIntlEditor($locale);
 
 	switch ($type) {
 		case 'missing':
-			$missing = $babelEditor->getMissingStrings();
+			$missing = $reactIntlEditor->getMissingStrings();
 			break;
 		default:
-			throw new \BabelEditor\Exception('Unknown String Type Specified in Querystring');
+			throw new \ReactIntlEditor\Exception('Unknown String Type Specified in Querystring');
 			break;
 	}
 
 
-} catch (\BabelEditor\Exception $e) {
+} catch (\ReactIntlEditor\Exception $e) {
 
 	echo '<div style="color:black;border:3px solid red;padding:15px;max-width:800px;width:100%;">';
 	echo '<p>An error has occured during startup:</p><p>' . $e->getMessage() . '</p>';
@@ -33,14 +33,14 @@ try {
 
 ?><html lang="en">
 	<head>
-		<title>Babel Editor</title>
-		<link rel="stylesheet" href="assets/babel-editor.css" />
+		<title>React Intl Editor</title>
+		<link rel="stylesheet" href="assets/react-intl-editor.css" />
 	</head>
 
 	<body>
 		<div class="wrapper">
 			<header>
-				<h1>Babel Editor</h1>
+				<h1>React Intl Editor</h1>
 				<h2><?php echo $locale; ?></h2>
 			</header>
 			<main>
