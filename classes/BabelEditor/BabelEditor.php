@@ -3,24 +3,35 @@ namespace BabelEditor;
 
 class BabelEditor {
 
-	private $fileCount = 0;
 	private $fileList = [];
+	private $sourceStrings = [];
 
 	public function __get($name) {
 		switch ($name) {
 			case 'fileCount':
-				return $this->fileCount;
+				return count($this->fileList);
+				break;
+			case 'stringCount';
+				return count($this->sourceStrings);
 				break;
 		}
 	}
 
 	public function __construct() {
 		/**
-		 * Load the Source String Files (messages)
+		 * Find all the Source Files
 		 */
 		$this->fileList = $this->getFileList(realpath('.') . '/intl/messages/');
-		$this->fileCount = count($this->fileList);
 
+		/**
+		 * Extract All Strings from Source Files
+		 */
+		foreach ($this->fileList as $file) {
+			$found = $this->extractStringsFromFile($file);
+
+			$this->sourceStrings = array_merge($this->sourceStrings, $found);
+
+		}
 	}
 
 	private function getFileList($path) {
@@ -37,5 +48,12 @@ class BabelEditor {
 		}
 
 		return $fileList;
+	}
+
+	private function extractStringsFromFile($file) {
+		$stringsFound = [];
+		$contents = file_get_contents($file);
+		$stringsFound = json_decode($contents);
+		return $stringsFound;
 	}
 }
