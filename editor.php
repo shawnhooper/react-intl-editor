@@ -99,7 +99,7 @@ try {
 			</main>
 			<footer>
 				<hr />
-				Created by Actionable
+				<a href="https://github.com/shawnhooper/react-intl-editor">React Intl Editor on GitHub</a>
 			</footer>
 		</div>
 
