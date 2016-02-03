@@ -118,3 +118,16 @@ button {
   font-weight:bold;
   border-radius:15px;
 }
+
+div.submitbar {
+  text-align: center;
+  padding-top:10px;
+  margin-bottom:30px;
+
+  button {
+    padding:15px;
+    background-color:green;
+    font-weight:bold;
+    font-size:1.2rem;
+  }
+}
