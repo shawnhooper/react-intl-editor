@@ -197,6 +197,37 @@ class ReactIntlEditor {
 	 *
 	 * @return int
 	 */
+	public function getMatchingStrings() {
+
+		if ($this->locale === null) {
+			throw new Exception('ReactIntlEditor was not instansiated with a locale');
+		}
+
+		$matches = [];
+
+		foreach ($this->sourceStrings as $sourceString) {
+			foreach ($this->localeStrings[$this->locale] as $localeString) {
+				if ($localeString[0] == $sourceString->id) {
+					$combinedString = array(
+						'id' => $sourceString->id,
+                        'defaultMessage'=> $sourceString->defaultMessage,
+                        'description' => $sourceString->description,
+                        'message' => $localeString[1]
+					);
+					array_push( $matches, $combinedString );
+					continue;
+				}
+			}
+		}
+
+		return $matches;
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
 	public function getMissingStrings() {
 
 		if ($this->locale === null) {

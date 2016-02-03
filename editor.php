@@ -14,8 +14,11 @@ try {
 	$reactIntlEditor = new \ReactIntlEditor\ReactIntlEditor($locale);
 
 	switch ($type) {
+		case 'matching':
+			$stringsArray = $reactIntlEditor->getMatchingStrings();
+			break;
 		case 'missing':
-			$missing = $reactIntlEditor->getMissingStrings();
+			$stringsArray = $reactIntlEditor->getMissingStrings();
 			break;
 		default:
 			throw new \ReactIntlEditor\Exception('Unknown String Type Specified in Querystring');
@@ -51,12 +54,12 @@ try {
 						<button class="submitbutton">Save Changes</button>
 					</div>
 
-					<?php $i=0; foreach ($missing as $string) { ?>
+					<?php $i=0; foreach ($stringsArray as $string) { ?>
 
 						<table class="translate_item" id="translate-table-<?php echo $i; ?>">
 							<thead>
 								<tr>
-									<td><span class="key"></strong><?php echo $string->id; ?></span></td>
+									<td><span class="key"></strong><?php echo ($type == 'missing') ? $string->id : $string['id']; ?></span></td>
 									<td></td>
 									<td>Translated Text for <?php echo $locale; ?> locale</td>
 								</tr>
@@ -64,21 +67,21 @@ try {
 							<tbody>
 							<tr>
 								<td class="original">
-									<p><span id="original-<?php echo $i;?>"><?php echo $string->defaultMessage; ?></span></p>
+									<p><span id="original-<?php echo $i;?>"><?php echo ($type == 'missing') ? $string->defaultMessage : $string['defaultMessage']; ?></span></p>
 								</td>
 								<td>
 									<button class="copybutton" data-id="<?php echo $i; ?>">Copy &gt;</button>
 								</td>
 								<td>
-									<textarea class="translation" name="<?php echo $string->id; ?>" id="translation-<?php echo $i; ?>"></textarea>
+									<textarea class="translation" name="<?php echo ($type == 'missing') ? $string->id : $string['id']; ?>" id="translation-<?php echo $i; ?>"><?php if ($type == 'matching') { echo ($type == 'matching') ? $string['message'] : '';  } ?></textarea>
 								</td>
 							</tr>
 							</tbody>
-							<?php if ($string->description !== null && $string->description !== $string->defaultMessage) { ?>
+							<?php if ( ($type == 'matching' && $string['description'] !== null && $string['description'] !== $string['defaultMessage']) || ($type == 'missing' && $string->description !== null && $string->description !== $string->defaultMessage) ) { ?>
 							<tfoot>
 								<tr>
 									<td colspan="3">
-										<strong>Context:</strong><br /><?php echo $string->description; ?>
+										<strong>Context:</strong><br /><?php echo ($type == 'missing') ? $string->description : $string['description'] ?>
 									</td>
 								</tr>
 							</tfoot>
