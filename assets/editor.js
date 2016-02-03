@@ -10,6 +10,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
         destination.innerHTML = originalString;
 
+        event.preventDefault();
+
 
     };
 
