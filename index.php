@@ -86,7 +86,7 @@ try {
 						</tr>
 						<tr>
 							<th>Orphaned Strings</th>
-							<td><a href="editor.php?locale=<?php echo $locale; ?>&amp;type=orphaned"><?php echo $reactIntlEditor->getOrphanedStringCount($locale); ?></a></td>
+							<td><?php echo $reactIntlEditor->getOrphanedStringCount($locale); ?></td>
 						</tr>
 						</tbody>
 					</table>
