@@ -3,6 +3,8 @@ namespace BabelEditor;
 
 class BabelEditor {
 
+	private $locale = null;
+
 	private $sourceFiles = [];
 	private $localeFiles = [];
 
@@ -37,7 +39,13 @@ class BabelEditor {
 	/***
 	 * BabelEditor constructor.
 	 */
-	public function __construct() {
+	public function __construct($locale = null) {
+
+		/**
+		 * If a specific locale is being worked on, save it
+		 */
+		$this->locale = $locale;
+
 		/**
 		 * Find all the Source Files
 		 */
@@ -67,7 +75,6 @@ class BabelEditor {
 		 */
 		foreach ($this->sourceFiles as $file) {
 			$found = $this->extractStringsFromSourceFile($file);
-
 			$this->sourceStrings = array_merge($this->sourceStrings, $found);
 
 		}
@@ -76,8 +83,10 @@ class BabelEditor {
 		 * Extract All Strings from Locale Files
 		 */
 		foreach ($this->localeFiles as $file) {
-			$found = $this->extractStringsFromLocaleFile($file);
 			$locale = basename($file, '.json');
+			if ($this->locale === null || $this->locale === $locale)
+
+			$found = $this->extractStringsFromLocaleFile($file);
 			$this->localeStrings[$locale] = $found;
 		}
 
