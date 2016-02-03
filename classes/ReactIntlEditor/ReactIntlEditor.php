@@ -243,24 +243,30 @@ class ReactIntlEditor {
 	}
 
 	public function saveChanges() {
+
+		$realPost = Utilities::getRealInput('POST');
+
 		// Check for a Locale
-		if (!isset($_POST['locale'])) {
+		if (!isset($realPost['locale'])) {
 			throw new Exception('Missing Locale in Form');
 		} else {
-			$locale = $_POST['locale'];
-			unset($_POST['locale']);
+			$locale = $realPost['locale'];
+			unset($realPost['locale']);
 		}
 
 		// Check for a Locale
-		if (!isset($_POST['type'])) {
+		if (!isset($realPost['type'])) {
 			throw new Exception('Missing type parameter in Form');
 		} else {
-			$type = $_POST['type'];
-			unset($_POST['type']);
+			$type = $realPost['type'];
+			unset($realPost['type']);
 		}
+
+
 
 		switch ($type) {
 			case 'missing':
+				$this->saveChangesToMissingStrings($realPost, $locale);
 				break;
 			default:
 				throw new Exception('No handler for saving this type of record is implemented');
@@ -270,4 +276,28 @@ class ReactIntlEditor {
 		return true;
 	}
 
+	/***
+	 * @param $strings array The strings passed in from the HTML form.
+	 */
+	private function saveChangesToMissingStrings($strings, $locale) {
+		foreach($strings as $key=>$value) {
+			array_push($this->localeStrings[$locale], array($key, $value));
+		}
+
+		$output = '{';
+
+		foreach ($this->localeStrings[$locale] as $string) {
+			$output .= '"' . $string[0] . '": "';
+			$output .= $string[1];
+			$output .= '",';
+		}
+
+		$output .= '}';
+
+		echo '<pre>';
+		print_r(Utilities::jsonIndent($output));
+		echo '</pre>';
+
+		die();
+	}
 }
