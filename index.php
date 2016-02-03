@@ -59,6 +59,35 @@ try {
 
 				<div class="half">
 					<h1>Locales</h1>
+
+					<?php foreach ($babelEditor->locales as $locale) { ?>
+
+						<h2><?php echo $locale; ?></h2>
+					<table id="project_stats">
+						<thead>
+						<tr>
+							<th>Property</th>
+							<th>Value</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<th>Matching Strings</th>
+							<td><?php echo $babelEditor->getMatchingStringCount($locale); ?></td>
+						</tr>
+						<tr>
+							<th>Missing Strings</th>
+							<td><?php echo $babelEditor->getMissingStringCount($locale); ?></td>
+						</tr>
+						<tr>
+							<th>Orphaned Strings</th>
+							<td><?php echo $babelEditor->getOrphanedStringCount($locale); ?></td>
+						</tr>
+						</tbody>
+					</table>
+
+					<?php } ?>
+
 				</div>
 			</main>
 			<footer>

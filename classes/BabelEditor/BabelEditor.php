@@ -20,6 +20,9 @@ class BabelEditor {
 			case 'sourceFileCount':
 				return count($this->sourceFiles);
 				break;
+			case 'locales':
+				return array_keys($this->localeStrings);
+				break;
 			case 'localeCount':
 				return count($this->localeFiles);
 				break;
@@ -130,6 +133,74 @@ class BabelEditor {
 
 		return $stringsFound;
 
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
+	public function getLocaleStringCount($locale) {
+		return count($this->localeStrings[$locale]);
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
+	public function getMatchingStringCount($locale) {
+		$i = 0;
+		foreach ($this->localeStrings[$locale] as $localeString) {
+			foreach ($this->sourceStrings as $sourceString) {
+				if ($localeString[0] == $sourceString->id) {
+					$i++;
+					break;
+				}
+			}
+		}
+
+		return $i;
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
+	public function getMissingStringCount($locale) {
+		$i = 0;
+		foreach ($this->sourceStrings as $sourceString) {
+			$i++;
+			foreach ($this->localeStrings[$locale] as $localeString) {
+				if ($localeString[0] == $sourceString->id) {
+					$i--;
+					break;
+				}
+			}
+		}
+
+		return $i;
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
+	public function getOrphanedStringCount($locale) {
+		$i = 0;
+		foreach ($this->localeStrings[$locale] as $localeString) {
+			$i++;
+			foreach ($this->sourceStrings as $sourceString) {
+				if ($localeString[0] == $sourceString->id) {
+					$i--;
+					break;
+				}
+			}
+		}
+
+		return $i;
 	}
 
 }
