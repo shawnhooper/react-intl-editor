@@ -3,8 +3,11 @@ namespace BabelEditor;
 
 class BabelEditor {
 
-	private $fileList = [];
+	private $sourceFiles = [];
+	private $localeFiles = [];
+
 	private $sourceStrings = [];
+	private $localeStrings = [];
 
 	/***
 	 * @param $name string The property to retrieve
@@ -14,10 +17,13 @@ class BabelEditor {
 	 */
 	public function __get($name) {
 		switch ($name) {
-			case 'fileCount':
-				return count($this->fileList);
+			case 'sourceFileCount':
+				return count($this->sourceFiles);
 				break;
-			case 'stringCount';
+			case 'localeCount':
+				return count($this->localeFiles);
+				break;
+			case 'sourceStringCount';
 				return count($this->sourceStrings);
 				break;
 		}
@@ -32,12 +38,31 @@ class BabelEditor {
 		/**
 		 * Find all the Source Files
 		 */
-		$this->fileList = $this->getFileList(realpath('.') . '/intl/messages/');
+		$this->sourceFiles = $this->getFileList(realpath('.') . '/intl/messages/');
+
+		/**
+		 * If no source files can be found, throw an error
+		 */
+		if ($this->sourceFileCount == 0) {
+			throw new Exception('No source files were found in intl/messages/.  At least one source file must be included.');
+		}
+
+		/**
+		 * Find all the Locale Files
+		 */
+		$this->localeFiles = $this->getFileList(realpath('.') . '/intl/locales/');
+
+		/**
+		 * If no locales can be found, throw an error
+		 */
+		if ($this->localeCount == 0) {
+			throw new Exception('No locale files were found in intl/locales/.  At least one locale file must be specified.');
+		}
 
 		/**
 		 * Extract All Strings from Source Files
 		 */
-		foreach ($this->fileList as $file) {
+		foreach ($this->sourceFiles as $file) {
 			$found = $this->extractStringsFromFile($file);
 
 			$this->sourceStrings = array_merge($this->sourceStrings, $found);

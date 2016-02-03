@@ -8,8 +8,15 @@ spl_autoload_register(function($className)
 	include_once($class);
 });
 
-$babelEditor = new \BabelEditor\BabelEditor();
+try {
+	$babelEditor = new \BabelEditor\BabelEditor();
+} catch (\BabelEditor\Exception $e) {
 
+	echo '<div style="color:black;border:3px solid red;padding:15px;max-width:800px;width:100%;">';
+	echo '<p>An error has occured during startup:</p><p>' . $e->getMessage() . '</p>';
+	echo '</div>';
+	die();
+}
 
 ?><html lang="en">
 	<head>
@@ -36,11 +43,15 @@ $babelEditor = new \BabelEditor\BabelEditor();
 					<tbody>
 						<tr>
 							<th>Message Files Found</th>
-							<td><?php echo $babelEditor->fileCount; ?></td>
+							<td><?php echo $babelEditor->sourceFileCount; ?></td>
 						</tr>
 						<tr>
 							<th>Strings Found</th>
-							<td><?php echo $babelEditor->stringCount; ?></td>
+							<td><?php echo $babelEditor->sourceStringCount; ?></td>
+						</tr>
+						<tr>
+							<th>Locales Found</th>
+							<td><?php echo $babelEditor->localeCount; ?></td>
 						</tr>
 					</tbody>
 				</table>
