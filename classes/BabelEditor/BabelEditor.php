@@ -197,6 +197,36 @@ class BabelEditor {
 	 *
 	 * @return int
 	 */
+	public function getMissingStrings() {
+
+		if ($this->locale === null) {
+			throw new Exception('BabelEditor was not instansiated with a locale');
+		}
+
+		$matches = [];
+
+		foreach ($this->sourceStrings as $sourceString) {
+			$found = false;
+			foreach ($this->localeStrings[$this->locale] as $localeString) {
+				if ($localeString[0] == $sourceString->id) {
+					$found = true;
+					break;
+				}
+			}
+
+			if (!$found) {
+				array_push( $matches, $sourceString );
+			}
+		}
+
+		return $matches;
+	}
+
+	/***
+	 * @param $locale
+	 *
+	 * @return int
+	 */
 	public function getOrphanedStringCount($locale) {
 		$i = 0;
 		foreach ($this->localeStrings[$locale] as $localeString) {

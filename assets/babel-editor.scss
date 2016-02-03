@@ -60,3 +60,59 @@ div.locale_header {
   span { font-size:24px; }
   clear:both;
 }
+
+table.translate_item {
+  width: 100%;
+  margin-top:10px;
+  margin-bottom:30px;
+  padding-bottom:20px;
+  border-bottom:2px dashed black;
+
+  thead {
+    tr {
+      background-color:darkblue;
+      color:white;
+      font-weight:bold;
+
+      td {
+        padding:5px;
+      }
+    }
+  }
+
+  tr {
+    td {
+      vertical-align: top;
+      width:45%;
+
+      &:nth-of-type(2) {
+        width:10%;
+        text-align: center;
+      }
+
+      &.original {
+        padding-top:10px;
+      }
+    }
+  }
+
+  tfoot {
+    tr td {
+      background-color:lightgray;
+      text-align:center;
+      margin-bottom:20px;
+    }
+  }
+}
+
+textarea.translation {
+  width:100%;
+  height:100px;
+}
+
+button {
+  background-color:blue;
+  color:white;
+  font-weight:bold;
+  border-radius:15px;
+}
