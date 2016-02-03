@@ -266,7 +266,7 @@ class ReactIntlEditor {
 
 		switch ($type) {
 			case 'missing':
-				$this->saveChangesToMissingStrings($realPost, $locale);
+				$this->updateSourceStrings($realPost, $locale);
 				break;
 			default:
 				throw new Exception('No handler for saving this type of record is implemented');
@@ -279,17 +279,22 @@ class ReactIntlEditor {
 	/***
 	 * @param $strings array The strings passed in from the HTML form.
 	 */
-	private function saveChangesToMissingStrings($strings, $locale) {
+	private function updateSourceStrings($strings, $locale) {
 		foreach($strings as $key=>$value) {
+			if ($value == '') continue;
 			array_push($this->localeStrings[$locale], array($key, $value));
 		}
 
+		$this->saveSourceStringsToFile($locale);
+
+	}
+
+	private function saveSourceStringsToFile($locale) {
 		$output = '{';
 
 		for ($i = 0; $i < count($this->localeStrings[$locale]); $i++) {
-			if ($this->localeStrings[$locale][$i][1] == '') continue;
 			$output .= '"' . $this->localeStrings[$locale][$i][0] . '": "';
-			$output .= $this->localeStrings[$locale][$i][1];
+			$output .= str_replace("\n", '\n', $this->localeStrings[$locale][$i][1]);
 			$output .= ($i == count($this->localeStrings[$locale]) -1 ) ? '"' : '",';
 		}
 
@@ -300,7 +305,5 @@ class ReactIntlEditor {
 		$fhandle = fopen($fname,"w");
 		fwrite($fhandle,$output);
 		fclose($fhandle);
-
-		return;
 	}
 }
